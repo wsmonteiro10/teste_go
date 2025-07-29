@@ -29,8 +29,8 @@ Este projeto em Go tem como objetivo demonstrar habilidades com upload de arquiv
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seuusuario/seurepo.git
-cd seurepo
+git clone https://github.com/teste_go/seurepo.git
+cd teste_go
 
 # Suba a aplicação com Docker
 docker-compose up --build
