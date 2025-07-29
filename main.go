@@ -33,7 +33,7 @@ func main() {
 
 	r.POST("/rapido", middleware.ClientSecretMiddleware(), handlers.UploadFile)
 	r.POST("/ultrarapido", middleware.ClientSecretMiddleware(), handlers.UltraUploadFile)
-	r.GET("/arquivos", middleware.ClientSecretMiddleware(), handlers.ListUploadFiles)
+	r.GET("/listas_arquivos", middleware.ClientSecretMiddleware(), handlers.ListUploadFiles)
 
 	r.Run(":8080")
 }
