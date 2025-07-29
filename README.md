@@ -1,11 +1,11 @@
 
-# 🚀 Desafio Técnico | BU Sales & Marketing
+# Desafio Técnico | BU Sales & Marketing  🚀
 
 Este projeto em Go tem como objetivo demonstrar habilidades com upload de arquivos, processamento ETL e integração com banco de dados PostgreSQL. Também possui documentação interativa via Swagger.
 
 ---
 
-## 📦 Estrutura do Projeto
+##  Estrutura do Projeto
 
 - `handlers/` – Endpoints da API
 - `middleware/` – Autenticação e segurança
@@ -17,16 +17,15 @@ Este projeto em Go tem como objetivo demonstrar habilidades com upload de arquiv
 
 ---
 
-## 🛠️ Requisitos
+##  Requisitos
 
-- [Go 1.20+](https://golang.org/)
+- [Go 1.20](https://golang.org/)
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
-- `make` (opcional)
 
 ---
 
-## ⚙️ Como rodar o projeto
+##  Como rodar o projeto
 
 ```bash
 # Clone o repositório
@@ -45,15 +44,15 @@ A documentação Swagger estará em:
 
 ---
 
-## 📚 Documentação da API
+##  Documentação da API
 
-### 🔁 Health Check
+###  Health Check
 - `GET /ping`  
   Retorna `pong` – usado para verificar se o servidor está online.
 
 ---
 
-### ⚡ ETL Rápido
+###  ETL Rápido
 - `POST /rapido`  
   Upload de arquivo `.txt` ou `.csv`, grava os dados no banco Postgres com índices.
 
@@ -62,13 +61,13 @@ A documentação Swagger estará em:
 
 ---
 
-### 📂 Arquivos
+###  Arquivos
 - `GET /listas_arquivos`  
   Retorna a lista de arquivos que foram enviados para o servidor (diretório `/uploads`).
 
 ---
 
-## 🔒 Autenticação
+##  Autenticação
 
 As rotas de upload estão protegidas. Utilize o botão `Authorize` no Swagger para fornecer um `Client Secret` (se configurado no middleware).
 
