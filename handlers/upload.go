@@ -32,6 +32,14 @@ func UploadFile(c *gin.Context) {
 	// Limita o tamanho máximo do upload em 5GB (ajuste conforme desejar)
 	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 5<<30) // 5 GB
 
+	if _, err := os.Stat("uploads"); os.IsNotExist(err) {
+		err = os.Mkdir("uploads", 0755)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar pasta uploads: " + err.Error()})
+			return
+		}
+	}
+
 	file, header, err := c.Request.FormFile("file")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Falha ao receber arquivo: " + err.Error()})
@@ -92,6 +100,14 @@ func UltraUploadFile(c *gin.Context) {
 	}
 	defer file.Close()
 
+	if _, err := os.Stat("uploads"); os.IsNotExist(err) {
+		err = os.Mkdir("uploads", 0755)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar pasta uploads: " + err.Error()})
+			return
+		}
+	}
+
 	filename := header.Filename
 	ext := strings.ToLower(filepath.Ext(filename))
 	if ext != ".txt" && ext != ".csv" {
@@ -126,8 +142,7 @@ func UltraUploadFile(c *gin.Context) {
 // @name Client-Secret
 // @Produce json
 // @Success 200 {object} []map[string]string
-// @Router /upload [get]
-// ListUploadFiles - lista arquivos na pasta uploads
+// @Router /listas_arquivos [get]
 func ListUploadFiles(c *gin.Context) {
 	files, err := os.ReadDir("uploads")
 	if err != nil {

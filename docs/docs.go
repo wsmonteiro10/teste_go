@@ -15,6 +15,37 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/listas_arquivos": {
+            "get": {
+                "security": [
+                    {
+                        "ClientSecret": []
+                    }
+                ],
+                "description": "Retorna todos os arquivos da pasta uploads",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arquivos"
+                ],
+                "summary": "Retorna todos os arquivos da pasta uploads",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "Endpoint básico para teste de vida do servidor.",
@@ -124,37 +155,6 @@ const docTemplate = `{
                             "type": "object",
                             "additionalProperties": {
                                 "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/upload": {
-            "get": {
-                "security": [
-                    {
-                        "ClientSecret": []
-                    }
-                ],
-                "description": "Retorna todos os arquivos da pasta uploads",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arquivos"
-                ],
-                "summary": "Retorna todos os arquivos da pasta uploads",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "additionalProperties": {
-                                    "type": "string"
-                                }
                             }
                         }
                     }

@@ -4,6 +4,25 @@ info:
   title: Desafio Técnico | BU Sales & Marketing
   version: "1.0"
 paths:
+  /listas_arquivos:
+    get:
+      description: Retorna todos os arquivos da pasta uploads
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties:
+                type: string
+              type: object
+            type: array
+      security:
+      - ClientSecret: []
+      summary: Retorna todos os arquivos da pasta uploads
+      tags:
+      - Arquivos
   /ping:
     get:
       description: Endpoint básico para teste de vida do servidor.
@@ -78,25 +97,6 @@ paths:
       summary: 'ETL ultrarrápido: Upload de TXT ou CSV direto no Postgres sem índice'
       tags:
       - ETL Rápido
-  /upload:
-    get:
-      description: Retorna todos os arquivos da pasta uploads
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              additionalProperties:
-                type: string
-              type: object
-            type: array
-      security:
-      - ClientSecret: []
-      summary: Retorna todos os arquivos da pasta uploads
-      tags:
-      - Arquivos
 securityDefinitions:
   ClientSecret:
     in: header
