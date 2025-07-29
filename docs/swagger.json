@@ -1,0 +1,164 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Desafio Técnico | BU Sales \u0026 Marketing.",
+        "title": "Desafio Técnico | BU Sales \u0026 Marketing",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/ping": {
+            "get": {
+                "description": "Endpoint básico para teste de vida do servidor.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Retorna pong",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rapido": {
+            "post": {
+                "security": [
+                    {
+                        "ClientSecret": []
+                    }
+                ],
+                "description": "Recebe arquivos grandes via multipart/form-data, processa e salva no banco de forma eficiente",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "ETL Rápido"
+                ],
+                "summary": "ETL rápido: Upload de TXT ou CSV e grava no Postgres",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Arquivo para upload",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ultrarapido": {
+            "post": {
+                "security": [
+                    {
+                        "ClientSecret": []
+                    }
+                ],
+                "description": "Insere dados em massa sem índice para máxima performance",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "ETL Rápido"
+                ],
+                "summary": "ETL ultrarrápido: Upload de TXT ou CSV direto no Postgres sem índice",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Arquivo para upload",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/upload": {
+            "get": {
+                "security": [
+                    {
+                        "ClientSecret": []
+                    }
+                ],
+                "description": "Retorna todos os arquivos da pasta uploads",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arquivos"
+                ],
+                "summary": "Retorna todos os arquivos da pasta uploads",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ClientSecret": {
+            "type": "apiKey",
+            "name": "Client-Secret",
+            "in": "header"
+        }
+    }
+}

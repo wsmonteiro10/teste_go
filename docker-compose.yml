@@ -1,0 +1,32 @@
+networks:
+  clientes-network:
+    name: "clientes-network"
+services:
+  app:
+    container_name: api_clientes_compras
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    environment:
+      CLIENT_SECRET: "minha-senha-secreta1"
+      POSTGRES_URL: "postgres://postgres:admin@db_clientes_compras:5432/postgres?sslmode=disable"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - clientes-network
+  db:
+    image: postgres:12-alpine
+    container_name: db_clientes_compras
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - clientes-network

@@ -1,0 +1,105 @@
+info:
+  contact: {}
+  description: Desafio Técnico | BU Sales & Marketing.
+  title: Desafio Técnico | BU Sales & Marketing
+  version: "1.0"
+paths:
+  /ping:
+    get:
+      description: Endpoint básico para teste de vida do servidor.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Retorna pong
+      tags:
+      - health
+  /rapido:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Recebe arquivos grandes via multipart/form-data, processa e salva
+        no banco de forma eficiente
+      parameters:
+      - description: Arquivo para upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ClientSecret: []
+      summary: 'ETL rápido: Upload de TXT ou CSV e grava no Postgres'
+      tags:
+      - ETL Rápido
+  /ultrarapido:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Insere dados em massa sem índice para máxima performance
+      parameters:
+      - description: Arquivo para upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ClientSecret: []
+      summary: 'ETL ultrarrápido: Upload de TXT ou CSV direto no Postgres sem índice'
+      tags:
+      - ETL Rápido
+  /upload:
+    get:
+      description: Retorna todos os arquivos da pasta uploads
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties:
+                type: string
+              type: object
+            type: array
+      security:
+      - ClientSecret: []
+      summary: Retorna todos os arquivos da pasta uploads
+      tags:
+      - Arquivos
+securityDefinitions:
+  ClientSecret:
+    in: header
+    name: Client-Secret
+    type: apiKey
+swagger: "2.0"
