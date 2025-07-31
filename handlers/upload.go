@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"teste_go/etl"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -24,21 +25,13 @@ import (
 // @Param file formData file true "Arquivo para upload"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
-// @Router /rapido [post]
+// @Router /upload [post]
 func UploadFile(c *gin.Context) {
 
 	start := time.Now()
 
 	// Limita o tamanho máximo do upload em 5GB (ajuste conforme desejar)
 	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 5<<30) // 5 GB
-
-	if _, err := os.Stat("uploads"); os.IsNotExist(err) {
-		err = os.Mkdir("uploads", 0755)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar pasta uploads: " + err.Error()})
-			return
-		}
-	}
 
 	file, header, err := c.Request.FormFile("file")
 	if err != nil {
@@ -67,6 +60,8 @@ func UploadFile(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao salvar arquivo: " + err.Error()})
 		return
 	}
+
+	etl.Transform(savePath, "rapido")
 
 	end := time.Now()
 
@@ -88,9 +83,12 @@ func UploadFile(c *gin.Context) {
 // @Param file formData file true "Arquivo para upload"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string
-// @Router /ultrarapido [post]
+// @Router /upload_semindex [post]
 func UltraUploadFile(c *gin.Context) {
 	// Limita o tamanho máximo do upload em 5GB (ajuste conforme desejar)
+
+	start := time.Now()
+
 	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 5<<30) // 5 GB
 
 	file, header, err := c.Request.FormFile("file")
@@ -99,14 +97,6 @@ func UltraUploadFile(c *gin.Context) {
 		return
 	}
 	defer file.Close()
-
-	if _, err := os.Stat("uploads"); os.IsNotExist(err) {
-		err = os.Mkdir("uploads", 0755)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar pasta uploads: " + err.Error()})
-			return
-		}
-	}
 
 	filename := header.Filename
 	ext := strings.ToLower(filepath.Ext(filename))
@@ -129,7 +119,14 @@ func UltraUploadFile(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": fmt.Sprintf("Arquivo %s enviado com sucesso!", filename)})
+	etl.Transform(savePath, "ultrarapido")
+
+	end := time.Now()
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":     fmt.Sprintf("Arquivo %s enviado com sucesso!", filename),
+		"execucao_ms": fmt.Sprintf("%.2f", end.Sub(start).Seconds()*1000),
+	})
 }
 
 // Retorna todos os arquivos da pasta uploads
@@ -143,6 +140,7 @@ func UltraUploadFile(c *gin.Context) {
 // @Produce json
 // @Success 200 {object} []map[string]string
 // @Router /listas_arquivos [get]
+// ListUploadFiles - lista arquivos na pasta uploads
 func ListUploadFiles(c *gin.Context) {
 	files, err := os.ReadDir("uploads")
 	if err != nil {

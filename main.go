@@ -25,14 +25,13 @@ func main() {
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
 	config.AddAllowHeaders("Client-Secret")
-
 	r.Use(cors.New(config))
 
 	r.GET("/ping", handlers.Ping)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	r.POST("/rapido", middleware.ClientSecretMiddleware(), handlers.UploadFile)
-	r.POST("/ultrarapido", middleware.ClientSecretMiddleware(), handlers.UltraUploadFile)
+	r.POST("/upload", middleware.ClientSecretMiddleware(), handlers.UploadFile)
+	r.POST("/upload_semindex", middleware.ClientSecretMiddleware(), handlers.UltraUploadFile)
 	r.GET("/listas_arquivos", middleware.ClientSecretMiddleware(), handlers.ListUploadFiles)
 
 	r.Run(":8080")

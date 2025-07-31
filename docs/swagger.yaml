@@ -38,7 +38,7 @@ paths:
       summary: Retorna pong
       tags:
       - health
-  /rapido:
+  /upload:
     post:
       consumes:
       - multipart/form-data
@@ -68,7 +68,7 @@ paths:
       summary: 'ETL rápido: Upload de TXT ou CSV e grava no Postgres'
       tags:
       - ETL Rápido
-  /ultrarapido:
+  /upload_semindex:
     post:
       consumes:
       - multipart/form-data

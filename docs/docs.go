@@ -69,7 +69,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/rapido": {
+        "/upload": {
             "post": {
                 "security": [
                     {
@@ -115,7 +115,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/ultrarapido": {
+        "/upload_semindex": {
             "post": {
                 "security": [
                     {
