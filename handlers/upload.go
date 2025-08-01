@@ -72,7 +72,7 @@ func UploadFile(c *gin.Context) {
 }
 
 // ultraUploadFile permite upload de arquivo .txt ou .csv grande e salva no servidor
-// @Summary ETL ultrarrápido: Upload de TXT ou CSV direto no Postgres sem índice
+// @Summary ETL: Upload de TXT ou CSV direto no Postgres sem índice
 // @Description Insere dados em massa sem índice para máxima performance
 // @Tags ETL Rápido
 // @Security ClientSecret

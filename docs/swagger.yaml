@@ -94,7 +94,7 @@ paths:
             type: object
       security:
       - ClientSecret: []
-      summary: 'ETL ultrarrápido: Upload de TXT ou CSV direto no Postgres sem índice'
+      summary: 'ETL: Upload de TXT ou CSV direto no Postgres sem índice'
       tags:
       - ETL Rápido
 securityDefinitions:

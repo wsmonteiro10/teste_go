@@ -129,7 +129,7 @@ const docTemplate = `{
                 "tags": [
                     "ETL Rápido"
                 ],
-                "summary": "ETL ultrarrápido: Upload de TXT ou CSV direto no Postgres sem índice",
+                "summary": "ETL: Upload de TXT ou CSV direto no Postgres sem índice",
                 "parameters": [
                     {
                         "type": "file",
