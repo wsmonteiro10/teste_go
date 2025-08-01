@@ -24,10 +24,9 @@ func setupRouter() *gin.Engine {
 	r.Use(cors.New(config))
 
 	r.GET("/ping", handlers.Ping)
-
-	r.POST("/rapido", middleware.ClientSecretMiddleware(), handlers.UploadFile)
-	r.POST("/ultrarapido", middleware.ClientSecretMiddleware(), handlers.UltraUploadFile)
-	r.GET("/arquivos", middleware.ClientSecretMiddleware(), handlers.ListUploadFiles)
+	r.POST("/upload", middleware.ClientSecretMiddleware(), handlers.UploadFile)
+	r.POST("/upload_semindex", middleware.ClientSecretMiddleware(), handlers.UltraUploadFile)
+	r.GET("/listas_arquivos", middleware.ClientSecretMiddleware(), handlers.ListUploadFiles)
 
 	return r
 }
@@ -44,10 +43,10 @@ func TestPingRoute(t *testing.T) {
 	assert.Equal(t, `{"message":"pong"}`, resp.Body.String())
 }
 
-func TestRapidoWithoutSecret(t *testing.T) {
+func TestUploadWithoutSecret(t *testing.T) {
 	router := setupRouter()
 
-	req, _ := http.NewRequest("POST", "/rapido", nil)
+	req, _ := http.NewRequest("POST", "/upload", nil)
 	resp := httptest.NewRecorder()
 
 	router.ServeHTTP(resp, req)
@@ -55,11 +54,11 @@ func TestRapidoWithoutSecret(t *testing.T) {
 	assert.Equal(t, 401, resp.Code)
 }
 
-func TestRapidoWithSecret(t *testing.T) {
+func TestUploadWithSecret(t *testing.T) {
 	router := setupRouter()
 
 	body := strings.NewReader("dummy content")
-	req, _ := http.NewRequest("POST", "/rapido", body)
+	req, _ := http.NewRequest("POST", "/upload", body)
 	req.Header.Set("Client-Secret", "minha-senha-secreta")
 	resp := httptest.NewRecorder()
 
@@ -68,10 +67,10 @@ func TestRapidoWithSecret(t *testing.T) {
 	assert.NotEqual(t, 401, resp.Code)
 }
 
-func TestUltraRapidoWithoutSecret(t *testing.T) {
+func TestUltraUploadWithoutSecret(t *testing.T) {
 	router := setupRouter()
 
-	req, _ := http.NewRequest("POST", "/ultrarapido", nil)
+	req, _ := http.NewRequest("POST", "/upload_semindex", nil)
 	resp := httptest.NewRecorder()
 
 	router.ServeHTTP(resp, req)
@@ -79,11 +78,11 @@ func TestUltraRapidoWithoutSecret(t *testing.T) {
 	assert.Equal(t, 401, resp.Code)
 }
 
-func TestUltraRapidoWithSecret(t *testing.T) {
+func TestUltraUploadWithSecret(t *testing.T) {
 	router := setupRouter()
 
 	body := strings.NewReader("dummy content")
-	req, _ := http.NewRequest("POST", "/ultrarapido", body)
+	req, _ := http.NewRequest("POST", "/upload_semindex", body)
 	req.Header.Set("Client-Secret", "minha-senha-secreta")
 	resp := httptest.NewRecorder()
 
