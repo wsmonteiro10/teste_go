@@ -53,11 +53,11 @@ A documentação Swagger estará em:
 ---
 
 ###  ETL Rápido
-- `POST /rapido`  
+- `POST /upload`  
   Upload de arquivo `.txt` ou `.csv`, grava os dados no banco Postgres com índices.
 
-- `POST /ultrarapido`  
-  Upload ultrarrápido, grava direto no banco **sem criar índices** (melhor performance para grandes volumes).
+- `POST /upload_semindex`  
+  Upload de arquivo `.txt` ou `.csv`, grava direto no banco **sem criar índices** (melhor performance para grandes volumes).
 
 ---
 
